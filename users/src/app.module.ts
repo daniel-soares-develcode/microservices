@@ -6,6 +6,7 @@ import { PassportModule } from '@nestjs/passport'
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler'
 import { PrismaModule } from 'nestjs-prisma'
 
+import { HealthModule } from './api/health/health.module'
 import { UsersModule } from './api/users/users.module'
 import { JwtStrategy } from './shared/auth/jwt.strategy'
 import env from './shared/env'
@@ -42,7 +43,8 @@ import { JwtGuard } from './shared/guards/jwt.guard'
       }),
       inject: [ConfigService]
     }),
-    UsersModule
+    UsersModule,
+    HealthModule
   ],
   providers: [
     JwtStrategy,

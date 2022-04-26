@@ -21,6 +21,7 @@ async function bootstrap() {
 
   app.enableCors()
   app.use(helmet())
+  app.enableShutdownHooks()
   app.useGlobalPipes(new ValidationPipe({ transform: true }))
   app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter))
 

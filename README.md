@@ -65,6 +65,10 @@ Obs:
 
 **devDependencies**: `prisma`
 
+### Health checker
+
+**dependencies**: `@nestjs/terminus`
+
 ### Autenticação e segurança
 
 **dependencies**: `@nestjs/config` `@nestjs/jwt` `@nestjs/passport` `@nestjs/throttler` `helmet` `passport` `passport-jwt`
