@@ -10,6 +10,7 @@ import {
 } from '@nestjs/terminus'
 
 import { Public } from '../../shared/decorators/public.decorator'
+import { DbHealth } from './db.health'
 
 @Controller('health')
 export class HealthController {
@@ -17,6 +18,7 @@ export class HealthController {
     private readonly configService: ConfigService,
     private readonly health: HealthCheckService,
     private readonly microservice: MicroserviceHealthIndicator,
+    private readonly dbHealth: DbHealth,
     private readonly memory: MemoryHealthIndicator,
     private readonly disk: DiskHealthIndicator
   ) {}
@@ -31,8 +33,9 @@ export class HealthController {
           transport: Transport.TCP,
           options: { host: 'localhost', port: this.configService.get('port') }
         }),
-      async () => this.memory.checkHeap('memory_heap', 200 * 1024 * 1024),
-      async () => this.memory.checkRSS('memory_rss', 3000 * 1024 * 1024),
+      async () => this.dbHealth.isHealthy(),
+      async () => this.memory.checkHeap('memory heap', 200 * 1024 * 1024),
+      async () => this.memory.checkRSS('memory rss', 3000 * 1024 * 1024),
       async () =>
         this.disk.checkStorage('disk health', {
           threshold: 250 * 1024 * 1024 * 1024,
